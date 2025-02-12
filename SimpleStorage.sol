@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-// Before Righting any sc we always add solidity version 
+// Before Righting any sc we always add solidity version
 // '^' represent we can work with this version or greater than it
-pragma solidity ^0.8.18; 
+pragma solidity ^0.8.18;
 
 // Contract term represent whatever we are going to write in a sc
 
@@ -9,7 +9,7 @@ contract SimpleStorage {
     // There are mulliple types of variables in solidity
     // some are boolean, uint, int , string, address, bytes, etc
     // Here we are using uint which is unsigned integer
-    // after variable type we have to use access modifiers like public, private, internal, external. external is for functions 
+    // after variable type we have to use access modifiers like public, private, internal, external. external is for functions
     // every function which change the state of sc will require gas during transaction in this case getFavouriteNumber()
     // is not changing state so it will not require gas
 
@@ -18,14 +18,32 @@ contract SimpleStorage {
     // function syntax -> function fn_name (parameter) access_modifiers { code }
     // if function returns something -> function fn_name (parameter) access_modifiers returns (parameter_to_return ) { code }
 
-    function getFavouriteNumber (uint256 _favouriteNumber) public {
+    function getFavouriteNumber(uint256 _favouriteNumber) public {
         favouriteNumber = _favouriteNumber;
         // This requires gas
     }
 
-    function retreiveFavouriteNumber () public  view  returns(uint256) {
-        return  favouriteNumber;
+    function retreiveFavouriteNumber() public view returns (uint256) {
+        return favouriteNumber;
         // This doesnt require gas
         // We write view keyword because we access this state variable inside the contract which is favouriteNumber
     }
+
+    // We use struct to create own complex types
+    struct Person {
+        uint256 dob;
+        string name;
+    }
+
+    Person[] public friendList;
+
+    function addFriend(uint256 _dob, string memory _name) public {
+        friendList.push(Person(_dob, _name));
+    }
+
+    // memory, calldata,storage, etc are some places where evm can read and write from;
+    // memory and calldata are temporary, major types get automatically assigned to memory
+    // but for struct, array and mapppings we have to add explicit memory keyword
+    // diff in memory and calldata is memory variable can be modified but calldata variable cannot
+    // whatever variable is declared outside of fn like favouriteNumber they automatically converted to storage
 }
