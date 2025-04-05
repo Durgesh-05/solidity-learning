@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-// Before Righting any sc we always add solidity version 
+// Before Righting any sc we always add solidity version
 // '^' represent we can work with this version or greater than it
-pragma solidity ^0.8.18; 
+pragma solidity ^0.8.18;
 
 // Contract term represent whatever we are going to write in a sc
 
@@ -9,7 +9,7 @@ contract SimpleStorage {
     // There are mulliple types of variables in solidity
     // some are boolean, uint, int , string, address, bytes, etc
     // Here we are using uint which is unsigned integer
-    // after variable type we have to use access modifiers like public, private, internal, external. external is for functions 
+    // after variable type we have to use access modifiers like public, private, internal, external. external is for functions
     // every function which change the state of sc will require gas during transaction in this case getFavouriteNumber()
     // is not changing state so it will not require gas
 
@@ -18,13 +18,13 @@ contract SimpleStorage {
     // function syntax -> function fn_name (parameter) access_modifiers { code }
     // if function returns something -> function fn_name (parameter) access_modifiers returns (parameter_to_return ) { code }
 
-    function getFavouriteNumber (uint256 _favouriteNumber) public {
+    function getFavouriteNumber(uint256 _favouriteNumber) public {
         favouriteNumber = _favouriteNumber;
         // This requires gas
     }
 
-    function retreiveFavouriteNumber () public  view  returns(uint256) {
-        return  favouriteNumber;
+    function retreiveFavouriteNumber() public view returns (uint256) {
+        return favouriteNumber;
         // This doesnt require gas
         // We write view keyword because we access this state variable inside the contract which is favouriteNumber
     }
@@ -37,12 +37,12 @@ contract SimpleStorage {
 
     Person[] public friendList;
 
-    mapping (string => uint256) public nameTofavouriteNumber;
-    // it goes with the name map => it acts like a object we search for key and it gives value 
+    mapping(string => uint256) public nameTofavouriteNumber;
+    // it goes with the name map => it acts like a object we search for key and it gives value
     // default value of key in a map is 0
 
     function addFriend(uint256 _favouriteNumber, string memory _name) public {
-        friendList.push(Person(_favouriteNumber,_name));
+        friendList.push(Person(_favouriteNumber, _name));
         nameTofavouriteNumber[_name] = _favouriteNumber;
     }
 
@@ -51,6 +51,9 @@ contract SimpleStorage {
     // but for struct, array and mapppings we have to add explicit memory keyword
     // diff in memory and calldata is memory variable can be modified but calldata variable cannot
     // whatever variable is declared outside of fn like favouriteNumber they automatically converted to storage
-     
 }
 
+// To deploy this contract, we need to integrate our metamask wallet with remix (there are other options too)
+// After the integration, we can directly deploy the contract on the blockchain (testnet or mainnet) using remix
+// After deploying the contract, we can interact with it using the remix interface
+// Whenever we interact and chnage the state of the contract, we need to pay gas fees and for that we need to have some ether (or testnet tokens) in our wallet
